@@ -17,10 +17,13 @@ public class HomeController {
     public String homeArgumentResolver(@Login Member loginMember,
                                          HttpServletRequest request, Model model) {
 
+
         if (loginMember==null){
-            return "home";
+            //메인화면 스킨만 적용해둠
+            return "skone_home";
         }
         model.addAttribute("member",loginMember);
-        return "members/loginHome";
+        //로그인 완료된 페이지가 따로 하나 필요할듯한데 아직 없어서 로그인 완료도 메인화면페이지로해둠.
+        return "skone_home";
     }
 }

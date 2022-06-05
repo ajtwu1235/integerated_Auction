@@ -16,6 +16,7 @@ import skane.skaneshop.board.dto.request.ItemForm;
 import skane.skaneshop.board.dto.request.UploadFile;
 import skane.skaneshop.board.dto.request.Item;
 import skane.skaneshop.board.infra.ItemRepository;
+import skane.skaneshop.domain.Category;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -29,6 +30,41 @@ public class ItemController {
 
     private final ItemRepository itemRepository;
     private final FileStore fileStore;
+
+    //카테고리 목록
+    @ModelAttribute("category")
+    public Category[] itemTypes(){
+        Category[] values= Category.values();
+        return values;
+    }
+
+    //새로운 UI 테스트용임
+    @GetMapping("/test")
+    public String testMap(@ModelAttribute ItemForm form) { return  "skone_upload";};
+    //마찬가지로 새로운 UI 테스트용 잘대면 Mapping경로 바꿔 사용하기
+    @PostMapping("/test")
+    public String testPost(@ModelAttribute ItemForm form) throws IOException{
+
+        List<UploadFile> storeImageFiles =fileStore.storeFiles(form.getImageFiles());
+
+        Item item = new Item();
+        item.setItemName(form.getItemName());
+        item.setImageFiles(storeImageFiles);
+        item.setCategory(form.getCategory());
+        itemRepository.save(item);
+        log.info("테스트 성공");
+        log.info(form.getItemName());
+        System.out.println("form.getPrice() = " + form.getPrice());
+        List<String> category = form.getCategory();
+        for (String s : category) {
+            System.out.println("s = " + s);
+        }
+        System.out.println("form.getPrice() = " + form.getPrice());
+        System.out.println("form.getHotDeal() = " + form.getHotDeal());
+
+
+        return "home";
+    }
 
     @GetMapping("/items/new")
     public String newItem(@ModelAttribute ItemForm form){
