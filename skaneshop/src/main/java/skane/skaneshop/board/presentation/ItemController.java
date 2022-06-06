@@ -33,8 +33,6 @@ public class ItemController {
     private final ItemRepository itemRepository;
     private final FileStore fileStore;
 
-
-
     //카테고리 목록
     @ModelAttribute("category")
     public Category[] itemTypes(){
@@ -61,8 +59,6 @@ public class ItemController {
 
         System.out.println("itemRepository = " + itemRepository.findAll());
 
-
-
         log.info("테스트 성공");
         log.info(form.getItemName());
         System.out.println("form.getPrice() = " + form.getPrice());
@@ -74,6 +70,38 @@ public class ItemController {
         System.out.println("form.getHotDeal() = " + form.getHotDeal());
         System.out.println("storeImageFiles = " + storeImageFiles);
 
+        return "redirect:/";
+    }
+
+    //상품 수정 로직 추가함
+    @GetMapping("/items/edit/{itemId}")
+    public String editItemForm(@PathVariable Long itemId, Model model){
+        Item item = itemRepository.findById(itemId);
+        model.addAttribute("item", item);
+
+        return "skone_item_edit";}
+
+    @PostMapping ("/items/edit/{itemId}")
+    String editItem(@ModelAttribute ItemForm form,@PathVariable Long itemId) throws IOException{
+
+        List<UploadFile> storeImageFiles =fileStore.storeFiles(form.getImageFiles());
+
+        Item item = itemRepository.findById(itemId);
+        item.setItemName(form.getItemName());
+        item.setPrice(form.getPrice());
+        item.setHotDeal(form.getHotDeal());
+        item.setImageFiles(storeImageFiles);
+        item.setCategory(form.getCategory());
+
+        itemRepository.update(item);
+
+        return "redirect:/";
+    }
+
+    //상품 삭제 기능
+    @DeleteMapping("/items/delete/{itemId}")
+    public String deleteItem(@PathVariable Long itemId){
+        itemRepository.remove(itemId);
         return "redirect:/";
     }
 
@@ -95,8 +123,6 @@ public class ItemController {
         item.setAttachFile(attachFile);
         item.setImageFiles(storeImageFiles);
         itemRepository.save(item);
-
-
 
         redirectAttributes.addAttribute("itemId",item.getId());
 

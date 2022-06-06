@@ -14,6 +14,6 @@ public class Item {
     private String content;
     private List<String> category;//등록 지역
     private UploadFile attachFile;
-    private boolean HotDeal;
+    private boolean hotDeal;
     private List<UploadFile> imageFiles;
 }

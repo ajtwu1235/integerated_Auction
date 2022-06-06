@@ -85,7 +85,7 @@
     </style>
 </head>
 <body>
-<form method="post" enctype="multipart/form-data" th:object="${itemForm}">
+<form method="post" enctype="multipart/form-data" th:object="${item}">
 <div id="upload_layout1">
     <div>
         <text style="font-size: 35px;"  >물건 업로드</text>
@@ -96,7 +96,7 @@
         <label for="formFile" class="form-label">업로드 할 사진을 올려주세요</label>
         <input class="form-control" type="file" id="formFile" multiple="multiple"  th:field="*{imageFiles}"/>
         <div class="preview_box">
-
+            
         </div>
     </div>
 </div>
