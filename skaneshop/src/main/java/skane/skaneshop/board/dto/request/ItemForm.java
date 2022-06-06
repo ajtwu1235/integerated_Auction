@@ -10,10 +10,9 @@ public class ItemForm {
         private Long id;
         private String itemName;
         private int price;
-        private String userName;
-        private String tag;
-        private String content;
+        private Boolean hotDeal;// 판매 여부
+        private List<String> category;//등록 지역
         private MultipartFile attachFile;
-        private List<MultipartFile> imageFiles;
+        private List<MultipartFile> imageFiles; //이미지
 
 }

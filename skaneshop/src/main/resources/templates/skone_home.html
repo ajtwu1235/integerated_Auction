@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+            crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        h2 {
+            font-size: 50px;
+            text-align: center;
+            color: white;
+            background-color: #b090fe;
+            margin-left: 25%;
+            margin-right: 25%;
+            margin-top: 25px;
+        }
+        #logo_img {
+            float: left;
+            margin-left: 20%;
+        }
+
+        #layout_1 {
+            position: relative;
+            padding-left: 40%;
+        }
+        #serch_text {
+            width: 400px;
+            height: auto;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 14px;
+        }
+        #serch_button{
+            width: 100px;
+            height: auto;
+            font-size: 20px;
+            color: white;
+            background-color: #b090fe;
+            border-color: #b090fe;
+            border-radius: 6px;
+            border-style: solid;
+
+        }
+
+        #category-select {
+            width: 300px;
+            height: 50px;
+            margin-left: 0%;
+            margin-right: 27%;
+            padding-left: 5px;
+        }
+        #sell_button {
+            width: 130px;
+            height: 50px;
+            font-size: 20px;
+            color: white;
+            background-color: #b090fe;
+            border-color: #b090fe;
+
+        }
+        #hotdeal_button {
+            width: 130px;
+            height: 50px;
+            font-size: 20px;
+            color: white;
+            background-color: #b090fe;
+            border-color: #b090fe;
+
+        }
+        #auction_button {
+            width: 130px;
+            height: 50px;
+            font-size: 20px;
+            color: white;
+            background-color: #b090fe;
+            border-color: #b090fe;
+
+        }
+        #category_layout {
+            border-style: solid;
+            border-color: #b090fe;
+            margin-left: 25%;
+            margin-right: 25%;
+            padding-left: 15px;
+            padding-top: 15px;
+            padding-right: 15px;
+        }
+
+        #login_button {
+            position: relative;
+            left: 180px;
+        }
+        #signup_button {
+            position: relative;
+            left: 180px;
+        }
+    </style>
+</head>
+<body>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"
+></script>
+
+<div>
+    <img src="img\scone_logo_slime_simple.png" th:src="@{../img/scone_logo_slime_simple.gif}" id="logo_img" />
+    <h2><strong>Scone</strong></h2>
+</div>
+
+<br />
+<br />
+
+<div id="layout_1">
+    <!-- 검색바 / 여기가 문제 웹 사이트 가로 비율 조정 _수정완료-->
+    <p>
+        <input id="serch_text" placeholder="어떤 상품을 검색하시겠습니까?" />
+        <button id="serch_button">검색</button>
+
+        <button id="login_button" class="btn btn-outline-secondary" th:onclick="|location.href='@{/login}'|">로그인</button>
+        <button id="signup_button" class="btn btn-outline-secondary" th:onclick="|location.href='@{/members/add}'|">회원가입</button>
+    </p>
+</div>
+
+<br />
+<!-- 여기서부터 카테고리 레이아웃 -->
+<div id="category_layout">
+    <p>
+        <select id="category-select" aria-label="Default select example">
+            <option selected>카테고리를 선택해주세요</option>
+            <option value="category_1">카테고리1</option>
+            <option value="category_2">카테고리2</option>
+            <option value="category_3">카테고리3</option>
+        </select>
+        <button id="hotdeal_button" class="btn btn-info">핫딜</button>
+        <button id="auction_button" class="btn btn-info">경매</button>
+        <button id="sell_button" class="btn btn-info" th:onclick="|location.href='@{/test}'|">판매하기</button>
+    </p>
+</div>
+
+<br />
+
+<!-- 여기서부터 카드 리스트 -->
+<div class="album py-5 ">
+    <div class="container" style="background-color: white">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+            <!--한 단락 시작-->
+            <div class="col" th:each="item:${items}">
+                <div class="card-head"> <!-- 기존 클래스는 card shadow-sm, 좀 더 클래스를 구분 짓고 싶어 card-head로 바꿈-->
+                    <svg
+                            class="bd-placeholder-img card-img-top"
+                            width="100%"
+                            height="225"
+                            xmlns="http://www.w3.org/2000/svg"
+                            role="button"
+                            aria-label="Placeholder: Thumbnail"
+                            preserveAspectRatio="xMidYMid slice"
+                            focusable="false"
+                    > <!-- role="button"은 사진을 클릭했을 때 버튼 형식으로 작동하게 도와줌-->
+                        <image href="img\scone_logo_slime_simple.png"  th:href="|/images/${item.imageFiles.get(0).getStoreFileName()}|" class="card-img-top" height="200" width="200" />
+                        <!-- <rect width="100%" height="100%" fill="#55595c" /> 이것이 썸네일의 원흉 일단 주석 처리 후 제거 보류 -->
+                    </svg>
+
+                    <div class="card-body">
+                        <p class="card-text">상품을 등록하시려면 눌러주세요!</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-secondary"
+                                >
+                                    상품 정보
+                                </button>
+                                <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-secondary"
+                                >
+                                    1:1 채팅
+                                </button>
+                            </div>
+                            <small class="text-price" th:text="|가격 : ${item.price}"|>가격 :</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--한 단락 끝-->
+
+<!--            &lt;!&ndash;한 단락 시작&ndash;&gt;-->
+<!--            <div class="col">-->
+<!--                <div class="card-head"> &lt;!&ndash; 기존 클래스는 card shadow-sm, 좀 더 클래스를 구분 짓고 싶어 card-head로 바꿈&ndash;&gt;-->
+<!--                    <svg-->
+<!--                            class="bd-placeholder-img card-img-top"-->
+<!--                            width="100%"-->
+<!--                            height="225"-->
+<!--                            xmlns="http://www.w3.org/2000/svg"-->
+<!--                            role="button"-->
+<!--                            aria-label="Placeholder: Thumbnail"-->
+<!--                            preserveAspectRatio="xMidYMid slice"-->
+<!--                            focusable="false"-->
+<!--                    > &lt;!&ndash; role="button"은 사진을 클릭했을 때 버튼 형식으로 작동하게 도와줌&ndash;&gt;-->
+<!--                        <image href="image\scone_logo_slime_simple.png" class="card-img-top" height="200" width="200"/>-->
+<!--                        &lt;!&ndash; <rect width="100%" height="100%" fill="#55595c" /> 이것이 썸네일의 원흉 일단 주석 처리 후 제거 보류 &ndash;&gt;-->
+<!--                        <text x="30%" y="50%" fill="#eceeef" dy=".3em">상품이 안 들어 왔습니다.</text>-->
+<!--                    </svg>-->
+
+<!--                    <div class="card-body">-->
+<!--                        <p class="card-text">상품을 등록하시려면 눌러주세요!</p>-->
+<!--                        <div class="d-flex justify-content-between align-items-center">-->
+<!--                            <div class="btn-group">-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    상품 정보-->
+<!--                                </button>-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    1:1 채팅-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <small class="text-price">가격 :</small>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;한 단락 끝&ndash;&gt;-->
+
+<!--            &lt;!&ndash;한 단락 시작&ndash;&gt;-->
+<!--            <div class="col">-->
+<!--                <div class="card-head"> &lt;!&ndash; 기존 클래스는 card shadow-sm, 좀 더 클래스를 구분 짓고 싶어 card-head로 바꿈&ndash;&gt;-->
+<!--                    <svg-->
+<!--                            class="bd-placeholder-img card-img-top"-->
+<!--                            width="100%"-->
+<!--                            height="225"-->
+<!--                            xmlns="http://www.w3.org/2000/svg"-->
+<!--                            role="button"-->
+<!--                            aria-label="Placeholder: Thumbnail"-->
+<!--                            preserveAspectRatio="xMidYMid slice"-->
+<!--                            focusable="false"-->
+<!--                    > &lt;!&ndash; role="button"은 사진을 클릭했을 때 버튼 형식으로 작동하게 도와줌&ndash;&gt;-->
+<!--                        <image href="image\scone_logo_slime_simple.png" class="card-img-top" height="200" width="200"/>-->
+<!--                        &lt;!&ndash; <rect width="100%" height="100%" fill="#55595c" /> 이것이 썸네일의 원흉 일단 주석 처리 후 제거 보류 &ndash;&gt;-->
+<!--                        <text x="30%" y="50%" fill="#eceeef" dy=".3em">상품이 안 들어 왔습니다.</text>-->
+<!--                    </svg>-->
+
+<!--                    <div class="card-body">-->
+<!--                        <p class="card-text">상품을 등록하시려면 눌러주세요!</p>-->
+<!--                        <div class="d-flex justify-content-between align-items-center">-->
+<!--                            <div class="btn-group">-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    상품 정보-->
+<!--                                </button>-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    1:1 채팅-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <small class="text-price">가격 :</small>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;한 단락 끝&ndash;&gt;-->
+
+<!--            &lt;!&ndash;한 단락 시작&ndash;&gt;-->
+<!--            <div class="col">-->
+<!--                <div class="card-head"> &lt;!&ndash; 기존 클래스는 card shadow-sm, 좀 더 클래스를 구분 짓고 싶어 card-head로 바꿈&ndash;&gt;-->
+<!--                    <svg-->
+<!--                            class="bd-placeholder-img card-img-top"-->
+<!--                            width="100%"-->
+<!--                            height="225"-->
+<!--                            xmlns="http://www.w3.org/2000/svg"-->
+<!--                            role="button"-->
+<!--                            aria-label="Placeholder: Thumbnail"-->
+<!--                            preserveAspectRatio="xMidYMid slice"-->
+<!--                            focusable="false"-->
+<!--                    > &lt;!&ndash; role="button"은 사진을 클릭했을 때 버튼 형식으로 작동하게 도와줌&ndash;&gt;-->
+<!--                        <image href="image\scone_logo_slime_simple.png" class="card-img-top" height="200" width="200"/>-->
+<!--                        &lt;!&ndash; <rect width="100%" height="100%" fill="#55595c" /> 이것이 썸네일의 원흉 일단 주석 처리 후 제거 보류 &ndash;&gt;-->
+<!--                        <text x="30%" y="50%" fill="#eceeef" dy=".3em">상품이 안 들어 왔습니다.</text>-->
+<!--                    </svg>-->
+
+<!--                    <div class="card-body">-->
+<!--                        <p class="card-text">상품을 등록하시려면 눌러주세요!</p>-->
+<!--                        <div class="d-flex justify-content-between align-items-center">-->
+<!--                            <div class="btn-group">-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    상품 정보-->
+<!--                                </button>-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    1:1 채팅-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <small class="text-price">가격 :</small>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;한 단락 끝&ndash;&gt;-->
+
+<!--            &lt;!&ndash;한 단락 시작&ndash;&gt;-->
+<!--            <div class="col">-->
+<!--                <div class="card-head"> &lt;!&ndash; 기존 클래스는 card shadow-sm, 좀 더 클래스를 구분 짓고 싶어 card-head로 바꿈&ndash;&gt;-->
+<!--                    <svg-->
+<!--                            class="bd-placeholder-img card-img-top"-->
+<!--                            width="100%"-->
+<!--                            height="225"-->
+<!--                            xmlns="http://www.w3.org/2000/svg"-->
+<!--                            role="button"-->
+<!--                            aria-label="Placeholder: Thumbnail"-->
+<!--                            preserveAspectRatio="xMidYMid slice"-->
+<!--                            focusable="false"-->
+<!--                    > &lt;!&ndash; role="button"은 사진을 클릭했을 때 버튼 형식으로 작동하게 도와줌&ndash;&gt;-->
+<!--                        <image href="image\scone_logo_slime_simple.png" class="card-img-top" height="200" width="200"/>-->
+<!--                        &lt;!&ndash; <rect width="100%" height="100%" fill="#55595c" /> 이것이 썸네일의 원흉 일단 주석 처리 후 제거 보류 &ndash;&gt;-->
+<!--                        <text x="30%" y="50%" fill="#eceeef" dy=".3em">상품이 안 들어 왔습니다.</text>-->
+<!--                    </svg>-->
+
+<!--                    <div class="card-body">-->
+<!--                        <p class="card-text">상품을 등록하시려면 눌러주세요!</p>-->
+<!--                        <div class="d-flex justify-content-between align-items-center">-->
+<!--                            <div class="btn-group">-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    상품 정보-->
+<!--                                </button>-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    1:1 채팅-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <small class="text-price">가격 :</small>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;한 단락 끝&ndash;&gt;-->
+
+<!--            &lt;!&ndash;한 단락 시작&ndash;&gt;-->
+<!--            <div class="col">-->
+<!--                <div class="card-head"> &lt;!&ndash; 기존 클래스는 card shadow-sm, 좀 더 클래스를 구분 짓고 싶어 card-head로 바꿈&ndash;&gt;-->
+<!--                    <svg-->
+<!--                            class="bd-placeholder-img card-img-top"-->
+<!--                            width="100%"-->
+<!--                            height="225"-->
+<!--                            xmlns="http://www.w3.org/2000/svg"-->
+<!--                            role="button"-->
+<!--                            aria-label="Placeholder: Thumbnail"-->
+<!--                            preserveAspectRatio="xMidYMid slice"-->
+<!--                            focusable="false"-->
+<!--                    > &lt;!&ndash; role="button"은 사진을 클릭했을 때 버튼 형식으로 작동하게 도와줌&ndash;&gt;-->
+<!--                        <image href="image\scone_logo_slime_simple.png" class="card-img-top" height="200" width="200"/>-->
+<!--                        &lt;!&ndash; <rect width="100%" height="100%" fill="#55595c" /> 이것이 썸네일의 원흉 일단 주석 처리 후 제거 보류 &ndash;&gt;-->
+<!--                        <text x="30%" y="50%" fill="#eceeef" dy=".3em">상품이 안 들어 왔습니다.</text>-->
+<!--                    </svg>-->
+
+<!--                    <div class="card-body">-->
+<!--                        <p class="card-text">상품을 등록하시려면 눌러주세요!</p>-->
+<!--                        <div class="d-flex justify-content-between align-items-center">-->
+<!--                            <div class="btn-group">-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    상품 정보-->
+<!--                                </button>-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    1:1 채팅-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <small class="text-price">가격 :</small>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;한 단락 끝&ndash;&gt;-->
+
+<!--            &lt;!&ndash;한 단락 시작&ndash;&gt;-->
+<!--            <div class="col">-->
+<!--                <div class="card-head"> &lt;!&ndash; 기존 클래스는 card shadow-sm, 좀 더 클래스를 구분 짓고 싶어 card-head로 바꿈&ndash;&gt;-->
+<!--                    <svg-->
+<!--                            class="bd-placeholder-img card-img-top"-->
+<!--                            width="100%"-->
+<!--                            height="225"-->
+<!--                            xmlns="http://www.w3.org/2000/svg"-->
+<!--                            role="button"-->
+<!--                            aria-label="Placeholder: Thumbnail"-->
+<!--                            preserveAspectRatio="xMidYMid slice"-->
+<!--                            focusable="false"-->
+<!--                    > &lt;!&ndash; role="button"은 사진을 클릭했을 때 버튼 형식으로 작동하게 도와줌&ndash;&gt;-->
+<!--                        <image href="image\scone_logo_slime_simple.png" class="card-img-top" height="200" width="200"/>-->
+<!--                        &lt;!&ndash; <rect width="100%" height="100%" fill="#55595c" /> 이것이 썸네일의 원흉 일단 주석 처리 후 제거 보류 &ndash;&gt;-->
+<!--                        <text x="30%" y="50%" fill="#eceeef" dy=".3em">상품이 안 들어 왔습니다.</text>-->
+<!--                    </svg>-->
+
+<!--                    <div class="card-body">-->
+<!--                        <p class="card-text">상품을 등록하시려면 눌러주세요!</p>-->
+<!--                        <div class="d-flex justify-content-between align-items-center">-->
+<!--                            <div class="btn-group">-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    상품 정보-->
+<!--                                </button>-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    1:1 채팅-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <small class="text-price">가격 :</small>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;한 단락 끝&ndash;&gt;-->
+
+<!--            &lt;!&ndash;한 단락 시작&ndash;&gt;-->
+<!--            <div class="col">-->
+<!--                <div class="card-head"> &lt;!&ndash; 기존 클래스는 card shadow-sm, 좀 더 클래스를 구분 짓고 싶어 card-head로 바꿈&ndash;&gt;-->
+<!--                    <svg-->
+<!--                            class="bd-placeholder-img card-img-top"-->
+<!--                            width="100%"-->
+<!--                            height="225"-->
+<!--                            xmlns="http://www.w3.org/2000/svg"-->
+<!--                            role="button"-->
+<!--                            aria-label="Placeholder: Thumbnail"-->
+<!--                            preserveAspectRatio="xMidYMid slice"-->
+<!--                            focusable="false"-->
+<!--                    > &lt;!&ndash; role="button"은 사진을 클릭했을 때 버튼 형식으로 작동하게 도와줌&ndash;&gt;-->
+<!--                        <image href="image\scone_logo_slime_simple.png" class="card-img-top" height="200" width="200"/>-->
+<!--                        &lt;!&ndash; <rect width="100%" height="100%" fill="#55595c" /> 이것이 썸네일의 원흉 일단 주석 처리 후 제거 보류 &ndash;&gt;-->
+<!--                        <text x="30%" y="50%" fill="#eceeef" dy=".3em">상품이 안 들어 왔습니다.</text>-->
+<!--                    </svg>-->
+
+<!--                    <div class="card-body">-->
+<!--                        <p class="card-text">상품을 등록하시려면 눌러주세요!</p>-->
+<!--                        <div class="d-flex justify-content-between align-items-center">-->
+<!--                            <div class="btn-group">-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    상품 정보-->
+<!--                                </button>-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    1:1 채팅-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <small class="text-price">가격 :</small>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;한 단락 끝&ndash;&gt;-->
+
+<!--            &lt;!&ndash;한 단락 시작&ndash;&gt;-->
+<!--            <div class="col">-->
+<!--                <div class="card-head"> &lt;!&ndash; 기존 클래스는 card shadow-sm, 좀 더 클래스를 구분 짓고 싶어 card-head로 바꿈&ndash;&gt;-->
+<!--                    <svg-->
+<!--                            class="bd-placeholder-img card-img-top"-->
+<!--                            width="100%"-->
+<!--                            height="225"-->
+<!--                            xmlns="http://www.w3.org/2000/svg"-->
+<!--                            role="button"-->
+<!--                            aria-label="Placeholder: Thumbnail"-->
+<!--                            preserveAspectRatio="xMidYMid slice"-->
+<!--                            focusable="false"-->
+<!--                    > &lt;!&ndash; role="button"은 사진을 클릭했을 때 버튼 형식으로 작동하게 도와줌&ndash;&gt;-->
+<!--                        <image href="image\scone_logo_slime_simple.png" class="card-img-top" height="200" width="200"/>-->
+<!--                        &lt;!&ndash; <rect width="100%" height="100%" fill="#55595c" /> 이것이 썸네일의 원흉 일단 주석 처리 후 제거 보류 &ndash;&gt;-->
+<!--                        <text x="30%" y="50%" fill="#eceeef" dy=".3em">상품이 안 들어 왔습니다.</text>-->
+<!--                    </svg>-->
+
+<!--                    <div class="card-body">-->
+<!--                        <p class="card-text">상품을 등록하시려면 눌러주세요!</p>-->
+<!--                        <div class="d-flex justify-content-between align-items-center">-->
+<!--                            <div class="btn-group">-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    상품 정보-->
+<!--                                </button>-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        class="btn btn-sm btn-outline-secondary"-->
+<!--                                >-->
+<!--                                    1:1 채팅-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <small class="text-price">가격 :</small>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;한 단락 끝&ndash;&gt;-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<!--
+<table style="padding-top: 25px;">
+    <div class="container" style="padding: 70px 10px 70px 10px;">
+        <div id="row_1" class="row" style="text-align: center;">
+            <div class="col">
+                물건을 삽입해주세요
+            </div>
+            <div class="col">
+                물건을 삽입해주세요
+            </div>
+            <div class="col">
+                물건을 삽입해주세요
+            </div>
+        </div>
+    </div>
+</table>
+<table>
+    <div class="container" style="padding: 70px 10px 70px 10px;">
+        <div id="row_1" class="row" style="text-align: center;">
+            <div class="col">
+                물건을 삽입해주세요
+            </div>
+            <div class="col">
+                물건을 삽입해주세요
+            </div>
+            <div class="col">
+                물건을 삽입해주세요
+            </div>
+        </div>
+    </div>
+</table>
+<table>
+    <div class="container" style="padding: 70px 10px 70px 10px;">
+        <div id="row_1" class="row" style="text-align: center;">
+            <div class="col">
+                물건을 삽입해주세요
+            </div>
+            <div class="col">
+                물건을 삽입해주세요
+            </div>
+            <div class="col">
+                물건을 삽입해주세요
+            </div>
+        </div>
+    </div>
+</table>
+-->
+</body>
+</html>

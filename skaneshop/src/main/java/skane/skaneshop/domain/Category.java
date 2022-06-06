@@ -1,5 +1,14 @@
 package skane.skaneshop.domain;
 
+import lombok.Getter;
+
+@Getter
 public enum Category {
-  CLOTHES, ELECTRONIC_PRODUCTS, SPORT, BOOKS
+  CLOTHES("의상"), ELECTRONIC_PRODUCTS("전자제품"), SPORT("스포츠"), BOOKS("책");
+
+  private  final String description;
+
+  Category(String description) {
+    this.description = description;
+  }
 }
