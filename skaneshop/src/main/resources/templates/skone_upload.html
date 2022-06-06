@@ -94,7 +94,7 @@
 <div id="upload_layout2">
     <div class="mb-3">
         <label for="formFile" class="form-label">업로드 할 사진을 올려주세요</label>
-        <input class="form-control" type="file" id="formFile" multiple="multiple" th:name="imageFiles"/>
+        <input class="form-control" type="file" id="formFile" multiple="multiple"  th:field="*{imageFiles}"/>
         <div class="preview_box">
             <text style="font-size: 15px;">사진 미리보기</text>
         </div>
