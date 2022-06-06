@@ -42,7 +42,7 @@
 
       <!-- 로그인 ID 부분 -->
       <div class = "form-floating">
-        <input type="email" id="loginId" th:field="*{loginId}" class="form-control"
+        <input type="text" id="loginId" th:field="*{loginId}" class="form-control"
                th:errorclass="field-error" placeholder="name@example.com">
         <label for="loginId">로그인 ID</label>
         <div class="field-error" th:errors="*{loginId}" />

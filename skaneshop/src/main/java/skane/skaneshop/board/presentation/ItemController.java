@@ -17,6 +17,8 @@ import skane.skaneshop.board.dto.request.UploadFile;
 import skane.skaneshop.board.dto.request.Item;
 import skane.skaneshop.board.infra.ItemRepository;
 import skane.skaneshop.domain.Category;
+import skane.skaneshop.login.application.ArgumentResolver.Login;
+import skane.skaneshop.login.dto.request.Member;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -30,6 +32,8 @@ public class ItemController {
 
     private final ItemRepository itemRepository;
     private final FileStore fileStore;
+
+
 
     //카테고리 목록
     @ModelAttribute("category")
@@ -49,9 +53,16 @@ public class ItemController {
 
         Item item = new Item();
         item.setItemName(form.getItemName());
+        item.setPrice(form.getPrice());
+        item.setHotDeal(form.getHotDeal());
         item.setImageFiles(storeImageFiles);
         item.setCategory(form.getCategory());
         itemRepository.save(item);
+
+        System.out.println("itemRepository = " + itemRepository.findAll());
+
+
+
         log.info("테스트 성공");
         log.info(form.getItemName());
         System.out.println("form.getPrice() = " + form.getPrice());
@@ -61,9 +72,9 @@ public class ItemController {
         }
         System.out.println("form.getPrice() = " + form.getPrice());
         System.out.println("form.getHotDeal() = " + form.getHotDeal());
+        System.out.println("storeImageFiles = " + storeImageFiles);
 
-
-        return "home";
+        return "redirect:/";
     }
 
     @GetMapping("/items/new")
@@ -84,6 +95,8 @@ public class ItemController {
         item.setAttachFile(attachFile);
         item.setImageFiles(storeImageFiles);
         itemRepository.save(item);
+
+
 
         redirectAttributes.addAttribute("itemId",item.getId());
 

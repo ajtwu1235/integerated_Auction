@@ -34,11 +34,6 @@ public class FileStore {
                 storeFileResult.add(uploadFile);
             }
         }
-
-        Item item = new Item();
-        item.toString();
-
-
         return storeFileResult;
     }
 
