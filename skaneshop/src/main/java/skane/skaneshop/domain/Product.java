@@ -10,10 +10,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+//잠깐 사용
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

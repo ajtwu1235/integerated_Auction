@@ -12,6 +12,7 @@ import skane.skaneshop.login.dto.request.Member;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+// 세션이 @Login 어노테이션과 Member class인지 판별
 @Slf4j
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
@@ -23,6 +24,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
         return hasLoginAnnot&&hasMemberType;
     }
 
+    //
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 
