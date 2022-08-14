@@ -27,11 +27,12 @@ public class WebConfig implements WebMvcConfigurer {
 
         // 비로그인 사용자 제한 목록
         // 220605 - 이미지파일도 접근가능하게 해둿음
+        // AuctionAPI 열음
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(2)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/","/members/add","/login","/logout",
-                        "/css/**","/img/**","/*.ico","/error");
+                        "/css/**","/img/**","/*.ico","/error","/api/**");
     }
 
 }

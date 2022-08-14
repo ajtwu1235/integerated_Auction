@@ -85,7 +85,7 @@ public class ItemController {
     String editItem(@ModelAttribute ItemForm form,@PathVariable Long itemId) throws IOException{
 
         List<UploadFile> storeImageFiles =fileStore.storeFiles(form.getImageFiles());
-
+        //상품 (HTML용) ItemForm ->(저장소) Item 타입 변형
         Item item = itemRepository.findById(itemId);
         item.setItemName(form.getItemName());
         item.setPrice(form.getPrice());

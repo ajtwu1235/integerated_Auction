@@ -11,15 +11,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import lombok.Getter;
+import lombok.Setter;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
+//잠깐 Setter 열어둠
+@Setter
 public class Auction {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name ="auction_id")
-  private Long actionNumber;
+  private Long auctionNumber;
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name="post_bord_id")
@@ -30,4 +36,9 @@ public class Auction {
 
   @Enumerated(EnumType.STRING)
   private Option option;
+
+  private int bid_price;
+
+  private Timestamp left_time;
+
 }

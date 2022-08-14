@@ -36,7 +36,6 @@ public class HomeController {
         }
 
 
-
         model.addAttribute("items",items);
         model.addAttribute("member",loginMember);
         //로그인 완료된 페이지가 따로 하나 필요할듯한데 아직 없어서 로그인 완료도 메인화면페이지로해둠.
