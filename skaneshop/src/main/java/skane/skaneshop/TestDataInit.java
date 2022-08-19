@@ -2,8 +2,10 @@ package skane.skaneshop;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import skane.skaneshop.Auction.application.AuctionService;
 import skane.skaneshop.Auction.infra.AuctionRepository;
 import skane.skaneshop.Auction.infra.AuctionTestRepository;
+import skane.skaneshop.Auction.infra.BidInfoRepository;
 import skane.skaneshop.board.infra.ItemRepository;
 import skane.skaneshop.domain.*;
 import skane.skaneshop.login.dto.request.Member;
@@ -19,8 +21,10 @@ public class TestDataInit {
 
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
+    private final AuctionService auctionService;
+    private final BidInfoRepository bidInfoRepository;
     private final AuctionTestRepository auctionTestRepository;
-    private final AuctionRepository auctionRepository;
+
 
     /**
      * 테스트용 데이터 추가
@@ -38,6 +42,9 @@ public class TestDataInit {
     }
 
 
+    /**
+     * 이 데이터 추가는 TestRepository 용임.
+     */
     @PostConstruct
     public void Auction_init(){
 
@@ -51,7 +58,9 @@ public class TestDataInit {
         PostBoard postBoard = new PostBoard(1L,product,"컴퓨터 판매","",Status.RESERVED, Timestamp.valueOf(LocalDateTime.now()));
         PostBoard postBoard2 = new PostBoard(2L,product2,"자바 기본서 팝니다","",Status.RESERVED, Timestamp.valueOf(LocalDateTime.now()));
 
+
         //예시 옥션 2개생성
+
         Auction auction = new Auction();
         auction.setPostBordNumber(postBoard);
         auction.setCategory(Category.ELECTRONIC_PRODUCTS);
@@ -62,6 +71,14 @@ public class TestDataInit {
         auction2.setCategory(Category.BOOKS);
         auction2.setOption(Option.AUCTION);
 
+/**
+ *  이 로직은  JPARepository 용임
+        auctionService.createAuction(auction);
+
+        // 이건 입찰정보 추가로직임
+        auctionService.fixed_bidV2("유저1",auction);
+        auctionService.fixed_bidV2("유저2",auction);
+*/
         auctionTestRepository.save(auction);
         auctionTestRepository.save(auction2);
 

@@ -1,20 +1,19 @@
 package skane.skaneshop.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -37,8 +36,21 @@ public class Auction {
   @Enumerated(EnumType.STRING)
   private Option option;
 
-  private int bid_price;
 
-  private Timestamp left_time;
+  @OneToMany(mappedBy = "auction")
+  private List<BidInfo> bidInfos = new ArrayList<>();
+
+  private LocalDateTime left_time;
+
+  //양방향 편의메소드  Auction-> BidInfo
+  public void addBidInfos(BidInfo bidInfo){
+
+    System.out.println("양방향 편의메소드  Auction-> BidInfo");
+    this.bidInfos.add(bidInfo);
+    if(bidInfo.getAuction()!=this){
+      bidInfo.setAuction(this);
+    }
+
+  }
 
 }

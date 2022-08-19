@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import skane.skaneshop.board.dto.request.Item;
 import skane.skaneshop.domain.Auction;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,8 @@ public class AuctionTestRepository {
 
     public Auction save(Auction auction){
         auction.setAuctionNumber(++sequence);
+        //Time 도 그냥 생성될때 만들어버리자
+        auction.setLeft_time(LocalDateTime.now().plusDays(7L));
         store.put(auction.getAuctionNumber(),auction);
         System.out.println("item = " + auction);
         return auction;
